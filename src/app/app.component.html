@@ -1,0 +1,34 @@
+<div class="container">
+
+      <div class="row g-12 wrapper">
+        <div  class="col-md-3">
+          <img class="d-block mx-auto mb-3" src="assets/images/logo.gif" alt="cotboxx" width="213" height="136">
+        </div>
+        <div class="col-md-9 bg-contboxx d-inline-flex">
+          <h5 style="margin: 20px 20px 0 0; position: absolute; right: 20px;">
+            The simple way to your Digital Signage Content
+          </h5> 
+          
+          <nav id="main-nav" class="d-flex justify-content-end align-items-end">
+            <ul>
+              <li routerLinkActive="active"><a [routerLink]="['/home']">Startseite</a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/shop']">Shop</a></li>
+              <li routerLinkActive="active"><a [routerLink]="['contact']">Kontakt</a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/about']">Über uns</a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/admin']">Admin</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+    <footer>
+      <div class="row g-12 wrapper bg-contboxx">
+        <div class="col-md-12">
+          <p>Nesletter | Impressum | AGB | Kontakt | Datenschutz</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+ 

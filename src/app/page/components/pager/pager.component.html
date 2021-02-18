@@ -1,0 +1,16 @@
+
+<div [style.display]="(pager.isVisible())? 'block' : 'none'" class="pager-wrapper">
+  <nav>
+    <ul class="pagination justify-content-center pagination-sm">
+      <li [style.display]="(pager.isVisiblePrevButton())? 'block' : 'none'" class="page-item">
+        <a class="page-link" [routerLink]="link" [queryParams]="{page: pager.getPrevPage()}" tabindex="-1" aria-disabled="true">Prev</a>
+      </li>
+      <li *ngFor="let page of [].constructor(pager.getPages()), let nr=index;" class="page-item" [class.active]="nr+1 === pager.getCurrentPage()">
+        <a class="page-link" [routerLink]="link" [queryParams]="{page: nr+1}">{{nr+1}}</a>
+      </li>
+        <li [style.display]="(pager.isVisibleNextButton())? 'block' : 'none'" class="page-item">
+        <a class="page-link" [routerLink]="link" [queryParams]="{page: pager.getNextPage()}">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

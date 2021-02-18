@@ -1,0 +1,24 @@
+<div class="row g-12 wrapper">
+  <div class="col-md-6 inner-20">
+    <h1 class="mb-40">Content-Kategorie: {{category.name}}</h1>
+  </div>
+  <div class="col-md-6 inner-20">
+    <app-shopping-cart-button class="d-flex justify-content-end"></app-shopping-cart-button>
+  </div>
+    <div class="col-md-12 inner-20">
+      <div class="float-none">
+        <div *ngFor="let p of collectionParts" class="float-lg-left card-landscape">
+            <a [routerLink]="['/product/', p.id]">
+                <div class="card-header">{{p.name}}</div>
+                <div class="card-body">
+                  <img src="assets/images/product-images/{{p.categoryId}}_{{p.id}}.jpg" />
+                </div>
+            </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <app-pager [collection]="products" [range]="range" [link]="link"></app-pager>
+    </div>
+</div>

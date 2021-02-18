@@ -1,0 +1,22 @@
+
+<app-nav></app-nav>
+
+<h2>Category-List</h2>
+
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of categories">
+        <th scope="row">{{c.id}}</th>
+        <td>{{c.name}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>

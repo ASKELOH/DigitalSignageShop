@@ -1,0 +1,54 @@
+
+<app-nav></app-nav>
+
+<div class="row">
+  <div class="col-md-4">
+    <h2>Product-List</h2>
+  </div>
+  <div class="col-md-4">
+    <a href="#" (click)="onNew($event)">New Product</a>
+  </div>
+  <div class="col-md-4">
+    ##search##
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <app-data-filter (filterData)="onDataFilter($event)"></app-data-filter>
+  </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Category-ID</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of _collectionParts | async">
+        <td scope="row">{{p.id}}</td>
+        <td>{{p.name}}</td>
+        <td>€ {{p.price}}</td>
+        <td>{{p.categoryId}}</td>
+        <td>
+          <a [routerLink]="['/admin/product/', p.id]">Detail</a> | 
+          <a href="#" (click)="onEdit($event, p)">Edit</a> |
+          <a href="#" (click)="onDelete($event, p)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+
+<div class="col-md-12">
+    <app-pager [collection]="_products" [range]="range" [link]="link"></app-pager>
+  </div>
+
+
+  
+  <pre>{{ closeResult }}</pre>

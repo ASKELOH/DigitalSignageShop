@@ -1,0 +1,61 @@
+<div class="row g-12 wrapper-content">
+
+    <div class="col-md-12 inner-20">
+        <h1 class="mb-40">Shopping-Cart</h1>
+        <a class="d-flex justify-content-center" [routerLink]="['/shop/categories']" alt="Back to Categories">
+            <img src="assets/images/arrow_top.gif" />
+        </a>
+    </div>
+    <div class="col-md-12">
+        <ng-container *ngIf="(shoppingCartItems)?.length > 0">
+            <table  id="cart-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Template</th>
+                        <th></th>
+                        <th>Preis</th>
+                        <th>Linzenzen</th>
+                        <th class="text-right">Summe</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let cart of shoppingCartItems">
+                        <tr>
+                            <td>
+                                <img class="img-thumbnail" 
+                                src="/assets/images/product-images/{{cart.product.categoryId}}_{{cart.product.id}}.jpg" 
+                                width="150"
+                                alt="cart.product.name">
+                            </td>
+                            <td>
+                                {{cart.product.name}}
+                            </td>
+                            <td>€ {{cart.price | number:'1.2-2'}}</td>
+                            <td>
+                                {{cart.quantity}}
+                                
+                                <nav style="display: inline-block;">
+                                    <ul>
+                                        <li (click)="onDecrementAmount(cart.product.id)">&#9664;</li>
+                                        <li (click)="onIncrementAmount(cart.product.id)">&#9654;</li>
+                                    </ul>
+                                </nav>
+                            </td>
+                            <td class="text-right">€ {{cart.getTotalPrice() | number:'1.2-2'}}</td>
+                            <td>
+                                <button (click)="onDeleteProduct(cart.product.id)" class="btn btn-outline-danger btn-sm">x</button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-end"><span>Summe ({{anzahl}} Artikel): </span><b> € {{total | number:'1.2-2'}}</b></div>
+        </ng-container>
+        <p *ngIf="(shoppingCartItems)?.length === 0">Der Einkaufswagen ist leer</p>
+      
+    </div>
+
+</div>
+
