@@ -14,8 +14,6 @@ export class DataFilterConfig implements IDataFilterConfig {
         this.formElements.push(element);
     }
     generate(): any {
-
-        console.log(this.formElements);
         let template = '';
         let cols =  this.grid / this.numberOfColumns;
         let row_start = '<div class="row">';

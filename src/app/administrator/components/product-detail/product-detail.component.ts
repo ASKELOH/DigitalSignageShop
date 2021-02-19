@@ -14,13 +14,17 @@ export class ProductDetailComponent implements OnInit {
 
   product: IProduct;
   category: ICategory;
-  imgSrc: String = "assets/images/product-images/";
+  imagePath: string = "/assets/images/product-images/";
+  placeholder: string = "1_1.jpg"
+  imgSrc: String = "";
   imgAlt: String = "";
   constructor(
     private route: ActivatedRoute,
     private ps: ProductService,
     private cs: CategoryService
-  ) { }
+  ) { 
+    this.imgSrc = this.imagePath + this.placeholder;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -29,7 +33,7 @@ export class ProductDetailComponent implements OnInit {
         this.product = data;
         this.cs.findOne(this.product.categoryId).subscribe(data => {
           this.category = data;
-          this.imgSrc += `${this.product.categoryId}_${this.product.id}.jpg`;
+          this.imgSrc = `${this.imagePath}${this.product.categoryId}_${this.product.id}.jpg`;
           this.imgAlt = this.product.name;
         });
       });

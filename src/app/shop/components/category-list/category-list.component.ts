@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PagerComponent } from 'src/app/page/components/pager/pager.component';
 import { CategoryService } from 'src/app/services/category.service';
 import { ICategory } from 'src/app/shared/interfaces/icategory';
@@ -12,8 +13,8 @@ import { ICategory } from 'src/app/shared/interfaces/icategory';
 export class CategoryListComponent implements OnInit {
   @ViewChild(PagerComponent) pagerComponent: PagerComponent<ICategory>;
 
-  categories: ICategory[] = [];
-  collectionParts: ICategory[] = [];
+  categories: Observable<ICategory[]>;
+  collectionParts: Observable<ICategory[]>;
   currentPage: number;
   range: number = 4;
   link: string = "/shop/categories";
@@ -26,9 +27,7 @@ export class CategoryListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.cs.findAll().subscribe(data => {
-      this.categories = data;
-    });
+    this.categories = this.cs.findAll(),
 
     setTimeout(() => {
       this.route.queryParams.subscribe(params => {
@@ -36,7 +35,7 @@ export class CategoryListComponent implements OnInit {
           this.pagerComponent.setCurrentPage(this.currentPage);
           this.collectionParts = this.pagerComponent.getCollectionParts();
       });
-    }, 50);
+    }, 500);
   }
 
 }

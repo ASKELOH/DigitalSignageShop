@@ -9,7 +9,7 @@
   </div>
     <div class="col-md-12 inner-20">
       <div class="float-none">
-        <div *ngFor="let cat of collectionParts" class="float-lg-left card">
+        <div *ngFor="let cat of categories | async" class="float-lg-left card">
             <a [routerLink]="['/category/', cat.id]">
                 <div class="card-header">{{cat.name}}</div>
                 <div class="card-body">

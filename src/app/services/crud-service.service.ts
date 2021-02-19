@@ -1,23 +1,27 @@
 import { Observable } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, shareReplay, retry } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
 import { ICrudOperations } from 'src/app/shared/interfaces/icrud-operations';
 
+const RETRY_SIZE = 3;
 
 export abstract class CrudServiceService<T, ID> implements ICrudOperations<T, ID> {
-
   constructor(
     protected _http: HttpClient,
     protected _base: string
   ) {}
 
   findOne(id: number): Observable<T> {
-    return this._http.get<T>(this._base + "/" + id).pipe(retry(3));
+    return this._http.get<T>(this._base + "/" + id).pipe(
+      retry(RETRY_SIZE)
+    );
   }
 
   findAll(): Observable<T[]> {
-    return this._http.get<T[]>(this._base).pipe(retry(3));
+    return this._http.get<T[]>(this._base).pipe(
+      retry(RETRY_SIZE)
+    );
   }
 
   post<T>(t: T): Observable<T> {

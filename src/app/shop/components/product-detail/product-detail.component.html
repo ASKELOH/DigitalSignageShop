@@ -1,7 +1,7 @@
 <div class="row g-12 wrapper-content">
 
     <div class="col-md-6 inner-20">
-        <h1 class="mb-40">Content-Kategorie: {{category.name}}</h1>
+        <h1 class="mb-40">Content-Kategorie: {{category?.name}}</h1>
       </div>
     <div class="col-md-6 inner-20">
         <app-shopping-cart-button class="d-flex justify-content-end"></app-shopping-cart-button>
@@ -15,7 +15,7 @@
       <img class="d-block mx-auto mb-4 img-thumbnail" [src]="imgSrc" [alt]="imgAlt">
     </div>
     <div class="col-md-6">
-        <h2>{{product.name}}</h2>
+        <h2>{{product?.name}}</h2>
         <p>Digital Signage Content: Für fast jeden Ort weltweit und in fast jeder Sprache auslieferbar: Das Lokalwetter mit der Vorhersage für die nächsten 3 Tage. Aktualisierungsintervall ca. 15 Minuten.</p>
         <button (click)="onAddProductToCart(product)" class="btn btn-sm btn-warning">In den Einkaufswagen</button>
     </div>

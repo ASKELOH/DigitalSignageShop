@@ -4,7 +4,7 @@
 <div class="row g-12 wrapper-content">
 
     <div class="col-md-12 inner-20">
-        <h1 class="mb-40">Template: {{product.name}}</h1>
+        <h1 class="mb-40">Template: {{product?.name}}</h1>
     </div>
     
     <div class="col-md-6">
@@ -14,19 +14,19 @@
         <table class="table">
             <tr>
                 <th>ID</th>
-                <td>{{product.id}}</td>
+                <td>{{product?.id}}</td>
             </tr>
             <tr>
                 <th>Name</th>
-                <td>{{product.name}}</td>
+                <td>{{product?.name}}</td>
             </tr>
             <tr>
                 <th>Preis</th>
-                <td>€ {{product.price | number:'1.2-2'}}</td>
+                <td>€ {{product?.price | number:'1.2-2'}}</td>
             </tr>
             <tr>
                 <th>Kategorie</th>
-                <td>{{category.name}}</td>
+                <td>{{category?.name}}</td>
             </tr>
         </table>   
       </div>

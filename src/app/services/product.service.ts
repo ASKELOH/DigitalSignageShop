@@ -7,6 +7,8 @@ import { CrudServiceService } from './crud-service.service';
 
 import { environment } from '../../environments/environment';
 
+const CACHE_SIZE = 1;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +19,9 @@ export class ProductService extends CrudServiceService<IProduct, number> {
   }
 
   getByCategoryId(categoryId: number): Observable<IProduct[]> {
-    return this._http.get<IProduct[]>(this._base + "/product/" + categoryId).pipe(retry(3));
+    return this._http.get<IProduct[]>(this._base + "/category/" + categoryId).pipe(
+      retry(3)
+    );
   }
 }
 

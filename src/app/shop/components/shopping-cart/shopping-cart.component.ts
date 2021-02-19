@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { IShoppingCartItem } from 'src/app/shared/interfaces/ishopping-cart-item';
-import { ShoppingCartItem } from 'src/app/shared/models/shopping-cart-item';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -14,15 +13,12 @@ export class ShoppingCartComponent implements OnInit {
   shoppingCartItems: IShoppingCartItem[] = [];
   total: number = 0;
   anzahl: number = 0;
-  constructor(private scs: ShoppingCartService, private ps: ProductService) { 
-    
-  }
+  constructor(private scs: ShoppingCartService, private ps: ProductService) {}
 
   ngOnInit(): void {
     this.scs.getAll().subscribe(data => {
       this.shoppingCartItems = data;
     });
-
     this._updateTotal();
   }
 
