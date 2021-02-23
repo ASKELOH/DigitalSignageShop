@@ -7,7 +7,7 @@
   </div>
     <div class="col-md-12 inner-20">
       <div class="float-none">
-        <div *ngFor="let p of collectionParts | async" class="float-lg-left card-landscape">
+        <div *ngFor="let p of collectionParts" class="float-lg-left card-landscape">
             <a [routerLink]="['/product/', p.id]">
                 <div class="card-header">{{p.name}}</div>
                 <div class="card-body">

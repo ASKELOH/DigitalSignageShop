@@ -1,3 +1,4 @@
+import { FormGroup } from "@angular/forms";
 import { IDataFilterConfig } from "../interfaces/idata-filter-config";
 import { IFormElement } from "../interfaces/iformelement";
 
@@ -5,8 +6,10 @@ export class DataFilterConfig implements IDataFilterConfig {
     numberOfColumns: number;
     formElements: IFormElement[] = [];
     private grid: number = 12;
+    form: FormGroup;
 
-    constructor(numberOfcolumns?: number) {
+    constructor(form: FormGroup, numberOfcolumns?: number) {
+        this.form = form;
         this.numberOfColumns = numberOfcolumns? numberOfcolumns : 1;
     }
     
@@ -44,6 +47,7 @@ export class DataFilterConfig implements IDataFilterConfig {
 
     getFilterData(event: any): any {
         let data = [];
+
         this.formElements.forEach(elem => {
             if (event.target[elem.name].value) {
                 let _data = {key: elem.name, value: event.target[elem.name].value};

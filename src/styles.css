@@ -73,6 +73,14 @@ div.wrapper-content {
     padding: 40px;
 }
 
+.inner-tb-20 {
+    padding: 20px 0 20px 0;
+}
+
+.inner-tb-40 {
+    padding: 40px 0 40px 0;
+}
+
 .mb-40 {
     margin-bottom: 40px;
 }

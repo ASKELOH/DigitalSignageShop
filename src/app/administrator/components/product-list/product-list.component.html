@@ -8,18 +8,16 @@
   <div class="col-md-4">
     <a href="#" (click)="onNew($event)">New Product</a>
   </div>
-  <div class="col-md-4">
-    ##search##
-  </div>
+  <div class="col-md-4"></div>
 </div>
 
-<div class="row">
+<div class="row inner-tb-20">
   <div class="col-md-12">
-    <app-data-filter (filterData)="onDataFilter($event)"></app-data-filter>
+    <app-data-filter-form [fields]="regConfig" [numberOfColumns]="rows" (submit)="onDataFilter($event)"></app-data-filter-form>
   </div>
 </div>
 
-<table class="table table-striped">
+<table *ngIf="collectionParts?.length; else infoBox" class="table table-striped">
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -30,7 +28,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of _collectionParts | async">
+      <tr *ngFor="let p of collectionParts">
         <td scope="row">{{p.id}}</td>
         <td>{{p.name}}</td>
         <td>€ {{p.price}}</td>
@@ -44,11 +42,11 @@
     </tbody>
 </table>
 
+<ng-template #infoBox>
+  <p>keine Produkte vorhanden</p>
+</ng-template>
+
 
 <div class="col-md-12">
-    <app-pager [collection]="_products" [range]="range" [link]="link"></app-pager>
-  </div>
-
-
-  
-  <pre>{{ closeResult }}</pre>
+  <app-pager [collection]="products" [range]="range" [link]="link"></app-pager>
+</div>

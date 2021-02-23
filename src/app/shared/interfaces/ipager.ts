@@ -1,9 +1,7 @@
-import { Observable } from "rxjs";
-
 export interface IPager<T> {
     pages: number;
     currentPage: number;
-    collection: Observable<T[]>;
+    collection: T[];
     range: number;
     display: boolean;
     visiblePrevButton: boolean;
@@ -19,6 +17,6 @@ export interface IPager<T> {
     isVisible(): boolean;
     isVisiblePrevButton(): boolean;
     isVisibleNextButton(): boolean;
-    getCollectionParts(): Observable<T[]>;
+    getCollectionParts(): T[];
 
 }

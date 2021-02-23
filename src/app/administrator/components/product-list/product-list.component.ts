@@ -10,15 +10,9 @@ import { ICategory } from 'src/app/shared/interfaces/icategory';
 import { FactoryModel } from 'src/app/shared/helper/factory-model';
 import { HTTPProcessingType } from 'src/app/shared/enums/httpprocessing-type.enum';
 import { DeleteModalComponent } from 'src/app/shared/modals/delete-modal/delete-modal.component';
-import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
-
-
-interface IProps {
-  id: string;
-  name: string;
-  age: number;
-} 
+import { IFieldConfig } from 'src/app/shared/interfaces/ifield-config';
+import { DataFilterFormComponent } from 'src/app/shared/components/data-filter-form/data-filter-form.component';
+import { DataMapper } from 'src/app/shared/helper/data-mapper';
 
 @Component({
   selector: 'app-product-list',
@@ -27,17 +21,40 @@ interface IProps {
 })
 export class ProductListComponent implements OnInit {
   @ViewChild(PagerComponent) pagerComponent: PagerComponent <IProduct>;
+  @ViewChild(DataFilterFormComponent) form: DataFilterFormComponent;
 
   products: IProduct[] = [];
-  _products: Observable<IProduct[]>;
-  categories: ICategory[] = [];
-  collectionParts: IProduct[] = [];
-  _collectionParts: Observable<IProduct[]>;
+  categories: ICategory[];
+  collectionParts: IProduct[];
   currentPage: number;
-  range: number = 10;
+  range: number = 2;
+  rows: number = 6;
   link: string = "/admin/products";
 
   closeResult = '';
+  collectionCount: number = 0;
+
+  regConfig: IFieldConfig[] = [
+    {
+      type: "input",
+      placeholder: "Name",
+      inputType: "text",
+      class: "form-control form-control-sm",
+      name: "name"
+    },
+    {
+      type: "select",
+      name: "categoryId",
+      value: "",
+      class: "form-control form-control-sm",
+      options: null
+    },
+    {
+      type: "button",
+      label: "Filtern",
+      class: "btn btn-secondary btn-sm",
+    }
+  ];
 
   constructor(
     private ps: ProductService,
@@ -47,20 +64,22 @@ export class ProductListComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    //this.ps.findAll().subscribe(data => this.products = data);
-    this._products = this.ps.findAll();
-    this.cs.findAll().subscribe(data => this.categories = data);
+    this.products = this.route.snapshot.data['products'];
+    this.cs.findAll().subscribe(data => {
+      this.categories = data;
+      const options = DataMapper.mapKeyValueParis(this.categories, {key: 'id', value: 'name'});
+      this.regConfig.find(obj => obj.name === 'categoryId').options = options;
+
+    });
 
     setTimeout(() => {
       this.route.queryParams.subscribe(params => {
           this.currentPage = +params['page'] || 1;
           this.pagerComponent.setCurrentPage(this.currentPage);
-          this._collectionParts = this.pagerComponent.getCollectionParts();
+          this.collectionParts = this.pagerComponent.getCollectionParts();
       });
     },500);
   }
-
-  ngAfterViewInit() {}
 
   onEdit(e, product: IProduct) {
     e.preventDefault();
@@ -139,19 +158,24 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  onDataFilter(data: any): void {
-    this._products = this.ps.findAll();
+  onDataFilter(filter: any): void {
+    this.products = this.route.snapshot.data['products'];
 
-    if(data.length <= 0) return;
-
-    data.forEach(_filter => {
-      //this._products = collection.filter(elem => elem[_filter.key] == _filter.value);
-
-      this._products = this._products.pipe(
-        map(items => items.filter(elem => elem[_filter.key] == _filter.value))
-        )
+    this.regConfig.forEach(prop => {
+      if (filter[prop.name]) {
+        switch(prop.name) {
+          case 'name':
+            this.products = this.products.filter(elem => elem[prop.name].toLowerCase().includes(filter[prop.name].toLowerCase()));
+          break;
+          default: 
+            this.products = this.products.filter(elem => elem[prop.name] == filter[prop.name]);
+          break;
+        }
+      }
     });
 
+    this.pagerComponent.reinitialize(this.products);
+    this.collectionParts = this.pagerComponent.getCollectionParts();
   }
 }
 

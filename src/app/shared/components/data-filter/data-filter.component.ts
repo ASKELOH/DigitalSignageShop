@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category.service';
-import { IDataFilterConfig } from '../../interfaces/idata-filter-config';
 import { DataFilterConfig } from '../../models/data-filter-config';
 import { InputElement } from '../../models/input-element';
 import { SelectElement } from '../../models/select-element';
@@ -19,11 +18,21 @@ export class DataFilterComponent implements OnInit {
   form: FormGroup;
   template: string;
 
-  constructor(private fb: FormBuilder, private cs: CategoryService) {
-    
-    this.conf = new DataFilterConfig(2);
-    const name = new InputElement('Name', 'name');
-    const price = new InputElement('Preis', 'price');
+  constructor(private fb: FormBuilder, private cs: CategoryService) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      name: '',
+      price: ''
+    });
+
+    this.initFilterConfig();
+  }
+
+  initFilterConfig() {
+    this.conf = new DataFilterConfig(this.form, 2);
+    const name = new InputElement('Name', 'name', this.form);
+    const price = new InputElement('Preis', 'price', this.form);
     this.conf.add(name);
     this.conf.add(price);
 
@@ -32,16 +41,9 @@ export class DataFilterComponent implements OnInit {
         return {key: obj.id, value: obj.name};
       });
 
-      const category = new SelectElement('kategorie', 'categoryId', options);
+      const category = new SelectElement('kategorie', 'categoryId', options, this.form);
       this.template = this.conf.generate();
 
-    });
-   }
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      name: '',
-      price: ''
     });
   }
 

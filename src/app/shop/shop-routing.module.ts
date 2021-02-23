@@ -4,19 +4,32 @@ import { CategoryListComponent } from './components/category-list/category-list.
 import { CategoryProductListComponent } from './components/category-product-list/category-product-list.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { CategoriesResolver } from 'src/app/services/categories-resolver.service';
+import { CategoryResolver } from 'src/app/services/category-resolver.service';
+import { ProductsResolver } from '../services/products-resolver.service';
+import { ProductResolver } from '../services/product-resolver.service';
 
 const routes: Routes = [
   {
     path: 'categories',
-    component: CategoryListComponent
+    component: CategoryListComponent,
+    resolve: {
+      categories: CategoriesResolver
+    }
   },
   {
     path: 'category/:id',
-    component: CategoryProductListComponent
+    component: CategoryProductListComponent,
+    resolve: {
+      category: CategoryResolver
+    }
   },
   {
     path: 'product/:id',
-    component: ProductDetailComponent
+    component: ProductDetailComponent,
+    resolve: {
+      product: ProductResolver
+    }
   },
   {
     path: 'cart',
@@ -32,6 +45,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    CategoriesResolver,
+    CategoryResolver,
+    ProductResolver
+  ]
 })
 export class ShopRoutingModule { }

@@ -11,9 +11,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './components/nav/nav.component';
 import { PageModule } from '../page/page.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DataFilterComponent } from '../shared/components/data-filter/data-filter.component';
 import { SanitizeHtmlPipePipe } from '../shared/helper/sanitize-html-pipe.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DataFilterFormComponent } from '../shared/components/data-filter-form/data-filter-form.component';
+import { DynamicFieldDirective } from '../shared/components/dynamic-field/dynamic-field.directive';
+import { DataFilterComponent } from '../shared/components/data-filter/data-filter.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     CustomerListComponent,
     CustomerDetailComponent,
     NavComponent,
+    SanitizeHtmlPipePipe,
+    DataFilterFormComponent,
     DataFilterComponent,
-    SanitizeHtmlPipePipe
+    DynamicFieldDirective
   ],
   imports: [
     CommonModule,

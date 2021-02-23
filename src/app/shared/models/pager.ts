@@ -1,66 +1,53 @@
-import { Observable, from, of } from "rxjs";
-import { skip, take, map, toArray, filter, scan, debounceTime, distinctUntilChanged, tap, reduce} from 'rxjs/operators';
 import { IPager } from "../interfaces/ipager";
 
 export class Pager<T> implements IPager<T> {
     pages: number;
     currentPage: number = 1;
-    collection: Observable<T[]>;
-    collectionParts: Observable<T[]>;
+    collection: T[] = [];
+    collectionParts: T[] = [];
     range: number;
     display: boolean = true;
     visiblePrevButton: boolean = true;
     visibleNextButton: boolean = true;
 
-    constructor(collection: Observable<T[]>, range: number = 1) {
+    constructor(collection: T[], range: number = 1) {
         this.collection = collection;
         this.range = range;
+        this.init();
+    }
+
+    init() {
         this.initPages();
+        this.initCollectionParts();
         this.initDisplayButtons();
     }
 
     private initPages(): void {
-        this.collection.subscribe(collection => {
-
-            if (collection.length <= this.range) {
-                this.pages = 1;
-                this.display = false;
-            } else {
-                const result = collection.length / this.range;
-                this.pages = Math.ceil(result);
-            }
-
-            this.collectionParts = this.collection;
-        });
+        if (this.collection.length <= this.range) {
+            this.pages = 1;
+            this.display = false;
+        } else {
+            const result = this.collection.length / this.range;
+            this.pages = Math.ceil(result);
+            this.display = true;
+        }
     }
 
-    private initCollectionParts(): void {
+    initCollectionParts(): void {
         const start = (this.currentPage === 1)? 0 : (this.currentPage - 1) * this.range;
         const end = this.currentPage * this.range;
-
-        this.collectionParts = this.collection.pipe(
-            map(selectedItems => {
-                return selectedItems.splice(start, end);
-            })
-        );
-
-        this.initDisplayButtons();
+        this.collectionParts = this.collection.slice(start, end);
     }
 
     private initDefaultCollectionParts(): void {
         const start = 0;
         const end = this.range;
-        //this.collectionParts = this.collection.slice(start, end);
-        /* this.collectionParts = this.collectionParts.pipe(
-            skip(start))
-            take(this.range)
-            ; */
-            
-
+        this.collectionParts = this.collection.slice(start, end);
         this.initDisplayButtons();
     }
 
     private initDisplayButtons(): void {
+        if(! this.display) return;
         this.visibleNextButton = (this.currentPage < this.pages)? true : false;
         this.visiblePrevButton = (this.currentPage > 1)? true : false;
     }
@@ -69,6 +56,10 @@ export class Pager<T> implements IPager<T> {
         return page > 0 && page <= this.pages;
     }
 
+    resetPage(): void {
+        this.currentPage = 1;
+    }
+    
     getCurrentPage(): number {
         return this.currentPage;
     }
@@ -94,11 +85,15 @@ export class Pager<T> implements IPager<T> {
     setCurrentPage(page: number): void {
         if (this.isValidPage(page)) {
             this.currentPage = page;
-            this.initCollectionParts();
+            this.init();
         }
         else {
             this.initDefaultCollectionParts();
         }
+    }
+
+    setCollection(collection: T[]) {
+        this.collection = collection;
     }
 
     isVisible(): boolean {
@@ -113,7 +108,7 @@ export class Pager<T> implements IPager<T> {
         return this.visibleNextButton;
     }
 
-    getCollectionParts(): Observable<T[]> {
+    getCollectionParts(): T[] {
         return this.collectionParts;
     }
 }

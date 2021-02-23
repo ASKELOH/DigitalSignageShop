@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from 'src/app/shared/interfaces/icategory';
 import { CategoryService } from 'src/app/services/category.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-category-list',
@@ -9,10 +10,10 @@ import { CategoryService } from 'src/app/services/category.service';
 })
 export class CategoryListComponent implements OnInit {
   categories: ICategory[] = [];
-  constructor(private cs: CategoryService) { }
+  constructor(private route: ActivatedRoute, private cs: CategoryService) { }
 
   ngOnInit(): void {
-    this.cs.findAll().subscribe(data => this.categories = data);
+    this.categories = this.route.snapshot.data['categories'];
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { PagerComponent } from 'src/app/page/components/pager/pager.component';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -17,8 +16,8 @@ export class CategoryProductListComponent implements OnInit {
 
   range: number = 3;
   category: ICategory;
-  products: Observable<IProduct[]>;
-  collectionParts: Observable<IProduct[]>;
+  products: IProduct[];
+  collectionParts: IProduct[];
   currentPage: number;
   link: string = "/shop/category/";
 
@@ -29,14 +28,13 @@ export class CategoryProductListComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.category = this.route.snapshot.data['category'];
 
-    this.route.params.subscribe(params => {
-      const categoryId = +params.id;
+    if(this.category) {
+      const categoryId = this.category.id;
       this.link = this.link + categoryId;
-
-      this.cs.findOne(categoryId).subscribe(data => this.category = data);
-      this.products = this.ps.getByCategoryId(categoryId);
-    });
+      this.ps.getByCategoryId(categoryId).subscribe(data => this.products = data);
+    }
 
     setTimeout(() => {
       this.route.queryParams.subscribe(params => {

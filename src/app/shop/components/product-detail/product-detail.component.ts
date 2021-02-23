@@ -26,18 +26,15 @@ export class ProductDetailComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = +params.id;
-      
-      this.ps.findOne(id).subscribe(data => {
-        this.product = data;
-        this.cs.findOne(this.product.categoryId).subscribe(data => {
-          this.category = data;
-          this.imgSrc += `${this.product.categoryId}_${this.product.id}.jpg`;
-          this.imgAlt = this.product.name;
-        });
+
+    this.product = this.route.snapshot.data['product'];
+    if(this.product) {
+      this.cs.findOne(this.product.categoryId).subscribe(data => {
+        this.category = data;
+        this.imgSrc += `${this.product.categoryId}_${this.product.id}.jpg`;
+        this.imgAlt = this.product.name;
       });
-    });
+    }
   }
 
   onAddProductToCart(product: IProduct): void {
