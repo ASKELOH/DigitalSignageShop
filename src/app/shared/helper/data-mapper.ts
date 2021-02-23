@@ -1,3 +1,5 @@
+import { IKeyValuePair } from 'src/app/shared/interfaces/ikey-value-pair';
+
 export class DataMapper {
 
     static mapKeyValueParis(arr: any[], kv: IKeyValuePair): IKeyValuePair[] {

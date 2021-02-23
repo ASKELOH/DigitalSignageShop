@@ -8,11 +8,18 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 })
 export class ShoppingCartButtonComponent implements OnInit {
 
-  anzahl: number = 0;
+  count: number = 0;
   constructor(private scs: ShoppingCartService) {}
 
   ngOnInit(): void {
-    this.scs.getTotalAmount().subscribe(data => this.anzahl = data);
+    this.updateCount();
   }
+
+  updateCount(): void {
+    this.scs.getTotalAmount().subscribe(data => {
+      this.count = data;
+  });
+}
+
 
 }

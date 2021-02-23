@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { ICategory } from 'src/app/shared/interfaces/icategory';
 import { IProduct } from 'src/app/shared/interfaces/iproduct';
+import { ShoppingCartButtonComponent } from '../shopping-cart-button/shopping-cart-button.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,7 +13,7 @@ import { IProduct } from 'src/app/shared/interfaces/iproduct';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-
+  @ViewChild(ShoppingCartButtonComponent) shoppingCartButton: ShoppingCartButtonComponent;
   category: ICategory;
   product: IProduct;
   imgSrc: String = "assets/images/product-images/";
@@ -39,6 +40,7 @@ export class ProductDetailComponent implements OnInit {
 
   onAddProductToCart(product: IProduct): void {
     this.scs.add(product, 1);
+    this.shoppingCartButton.updateCount();
   }
 
 }

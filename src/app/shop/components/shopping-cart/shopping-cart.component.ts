@@ -12,7 +12,7 @@ export class ShoppingCartComponent implements OnInit {
 
   shoppingCartItems: IShoppingCartItem[] = [];
   total: number = 0;
-  anzahl: number = 0;
+  count: number = 0;
   constructor(private scs: ShoppingCartService, private ps: ProductService) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class ShoppingCartComponent implements OnInit {
 
   _updateTotal() {
     this.scs.getTotalPrice().subscribe(data => this.total = data);
-    this.scs.getTotalAmount().subscribe(data => this.anzahl = data);
+    this.scs.getTotalAmount().subscribe(data => this.count = data);
   }
   
 }

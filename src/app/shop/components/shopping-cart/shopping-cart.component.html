@@ -51,7 +51,7 @@
                 </tbody>
             </table>
 
-            <div class="d-flex justify-content-end"><span>Summe ({{anzahl}} Artikel): </span><b> € {{total | number:'1.2-2'}}</b></div>
+            <div class="d-flex justify-content-end"><span>Summe ({{count}} Artikel): </span><b> € {{total | number:'1.2-2'}}</b></div>
         </ng-container>
         <p *ngIf="(shoppingCartItems)?.length === 0">Der Einkaufswagen ist leer</p>
       

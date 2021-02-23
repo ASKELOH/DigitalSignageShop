@@ -56,8 +56,6 @@ export class DataFilterFormComponent implements OnInit {
       );
       group.addControl(field.name, control);
     });
-
-    console.log(group);
     return group;
   }
 
