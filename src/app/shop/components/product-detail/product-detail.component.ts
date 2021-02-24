@@ -1,11 +1,14 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { ICategory } from 'src/app/shared/interfaces/icategory';
 import { IProduct } from 'src/app/shared/interfaces/iproduct';
+import { IShoppingCartItem } from 'src/app/shared/interfaces/ishopping-cart-item';
 import { ShoppingCartButtonComponent } from '../shopping-cart-button/shopping-cart-button.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,7 +26,8 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private cs: CategoryService,
     private ps: ProductService,
-    private scs: ShoppingCartService
+    private scs: ShoppingCartService,
+    private as: AlertService
     ) { }
 
   ngOnInit(): void {
@@ -41,6 +45,14 @@ export class ProductDetailComponent implements OnInit {
   onAddProductToCart(product: IProduct): void {
     this.scs.add(product, 1);
     this.shoppingCartButton.updateCount();
+
+    const options = {
+      autoClose: true,
+      keepAfterRouteChange: false
+    };
+
+    this.as.success("Produkt wurde in den Warenkorb gelegt", options);
+    
   }
 
 }

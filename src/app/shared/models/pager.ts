@@ -17,6 +17,7 @@ export class Pager<T> implements IPager<T> {
     }
 
     init() {
+        if(! this.collection) return;
         this.initPages();
         this.initCollectionParts();
         this.initDisplayButtons();

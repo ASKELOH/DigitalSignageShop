@@ -103,10 +103,22 @@ table#cart-table {
     color: #4ec2ee;
 }
 
-.btn-contboxx-outline:hover {
+.btn-contboxx-outline:hover { 
     background-color: #4ec2ee;
     border: 1px solid #4ec2ee;
     color: white;
+}
+
+.btn-contboxx-outline:focus, 
+.btn-contboxx-outline:active, 
+.btn-contboxx-outline:not(:disabled):not(.disabled):active,
+.btn-contboxx-outline:not(:disabled):not(.disabled):active:focus,
+.btn-contboxx-outline:not(:disabled):not(.disabled).active,
+    .btn-contboxx-outline:not(:disabled):not(.disabled).active:focus { 
+    background-color: #4ec2ee;
+    border: 1px solid #4ec2ee;
+    color: white;
+    box-shadow: rgb(179 233 252) 0px 0px 0px 4px;
 }
 
 /* Card */

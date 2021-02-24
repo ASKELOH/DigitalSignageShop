@@ -2,9 +2,12 @@
 
     <div class="col-md-6 inner-20">
         <h1 class="mb-40">Content-Kategorie: {{category?.name}}</h1>
-      </div>
+    </div>
     <div class="col-md-6 inner-20">
         <app-shopping-cart-button class="d-flex justify-content-end"></app-shopping-cart-button>
+    </div>
+    <div class="col-md-12">
+        <alert></alert>
     </div>
     <div class="col-md-12 inner-20">
         <a class="d-flex justify-content-center" [routerLink]="['/shop/categories']" alt="Back to Categories">

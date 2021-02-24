@@ -31,7 +31,7 @@ import { SubmitButtonComponent } from './shared/components/formelements/submit-b
     ShopModule,
     AdministratorModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

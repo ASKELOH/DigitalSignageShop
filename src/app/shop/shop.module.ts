@@ -8,6 +8,7 @@ import { CategoryProductListComponent } from './components/category-product-list
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ShoppingCartButtonComponent } from './components/shopping-cart-button/shopping-cart-button.component';
+import { AlertModuleModule } from '../alert-module/alert-module.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ShoppingCartButtonComponent } from './components/shopping-cart-button/s
   imports: [
     CommonModule,
     ShopRoutingModule,
-    PageModule
+    PageModule,
+    AlertModuleModule
   ]
 })
 export class ShopModule { }

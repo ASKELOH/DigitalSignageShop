@@ -3,8 +3,7 @@ import { IShoppingCartService } from '../shared/interfaces/ishopping-cart-servic
 import { IProduct } from '../shared/interfaces/iproduct';
 import { IShoppingCartItem } from '../shared/interfaces/ishopping-cart-item';
 import { ShoppingCartItem } from '../shared/models/shopping-cart-item';
-
-import { Observable, Subject, of } from "rxjs";
+import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,22 +12,9 @@ export class ShoppingCartService implements IShoppingCartService {
 
   private _cartItems: IShoppingCartItem[] = [];
 
-  private subject = new Subject();
+  constructor() {}
 
-  sendMessage(message: string) {
-    this.subject.next(message);
-  }
-
-  onMessage(): Observable<any> {
-    return this.subject.asObservable();
-  }
-
-  constructor() {
-    const cart = new ShoppingCartItem({id: 1, name: 'test', categoryId: 1, price: 23.2}, 1);
-    this._cartItems.push(cart);
-  }
-
-  getAll(): Observable<IShoppingCartItem[]> {
+  getAll(): Observable<ShoppingCartItem[]> {
     return of(this._cartItems);
   }
 
@@ -40,8 +26,6 @@ export class ShoppingCartService implements IShoppingCartService {
     if (! this.ProductExists(product.id)) {
       const cart = new ShoppingCartItem(product, quantity, price);
       this._cartItems.push(cart as IShoppingCartItem);
-
-      console.log('update');
     }
     else {
       const cart = this._cartItems.find(cart => cart.product.id === product.id);

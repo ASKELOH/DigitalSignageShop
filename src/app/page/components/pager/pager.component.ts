@@ -19,8 +19,7 @@ export class PagerComponent<T> implements OnInit {
   ngOnChanges() {
     if(! this.pager) {
       this.pager = new Pager<T>(this.collection, this.range);
-    }
-    else {
+    } else {
       this.pager.setCollection(this.collection);
       this.pager.init();
     }

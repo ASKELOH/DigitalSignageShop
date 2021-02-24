@@ -52,7 +52,7 @@ export class ProductListComponent implements OnInit {
     {
       type: "button",
       label: "Filtern",
-      class: "btn btn-secondary btn-sm",
+      class: "btn btn-sm btn-contboxx-outline",
     }
   ];
 
